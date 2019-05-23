@@ -2,6 +2,10 @@
 
 {% block body %}
 
-    {{ title }}
+    <h1>{{ title }}</h1>
+
+    <div id="content" data-entrypoint="{{ entrypoint }}" data-jwt="{{ jwt | e('html_attr') }}">
+
+    </div>
 
 {% endblock %}
