@@ -18,6 +18,10 @@ security:
                 class: App\Entity\Customer
                 property: email
 
+        chained:
+            chain:
+                providers: [employee_provider, customer_provider]
+
     firewalls:
 
         dev:
@@ -28,7 +32,7 @@ security:
             pattern:  ^/api/login
             stateless: true
             anonymous: true
-            provider: employee_provider
+            provider: chained
             json_login:
                 check_path:               /api/login_check
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
@@ -37,7 +41,7 @@ security:
         api:
             pattern:   ^/api
             stateless: true
-            provider: employee_provider
+            provider: chained
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
