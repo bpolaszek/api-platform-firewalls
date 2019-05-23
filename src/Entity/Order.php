@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"order:read"}},
+ *     denormalizationContext={"groups"={"order:write"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  * @ORM\Table("`order`")
  */
@@ -16,6 +20,7 @@ class Order
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"employee:order:read", "customer:order:read"})
      */
     private $id;
 
@@ -27,11 +32,13 @@ class Order
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"employee:order:read", "customer:order:read"})
      */
     private $product;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"employee:order:read"})
      */
     private $numberOfCalls = 0;
 

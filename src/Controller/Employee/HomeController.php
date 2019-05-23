@@ -18,5 +18,4 @@ final class HomeController
             'title' => 'Employee home',
         ];
     }
-
 }
