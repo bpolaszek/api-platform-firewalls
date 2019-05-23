@@ -1,0 +1,9 @@
+employee:
+    resource: ../../src/Controller/Employee/
+    type: annotation
+    prefix: /admin
+
+customer:
+    resource: ../../src/Controller/Customer/
+    type: annotation
+    prefix: /shop

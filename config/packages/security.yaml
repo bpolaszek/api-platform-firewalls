@@ -1,0 +1,50 @@
+security:
+    encoders:
+        App\Entity\Employee:
+            algorithm: argon2i
+        App\Entity\Customer:
+            algorithm: argon2i
+
+
+    providers:
+
+        employee_provider:
+            entity:
+                class: App\Entity\Employee
+                property: email
+
+        customer_provider:
+            entity:
+                class: App\Entity\Customer
+                property: email
+
+    firewalls:
+
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        admin:
+            pattern: ^/admin
+            anonymous: true
+            provider: employee_provider
+            guard:
+                authenticators:
+                    - App\Security\EmployeeAuthenticator
+
+        shop:
+            pattern: ^/shop
+            anonymous: true
+            provider: customer_provider
+            guard:
+                authenticators:
+                    - App\Security\CustomerAuthenticator
+
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/shop/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/shop, roles: IS_AUTHENTICATED_REMEMBERED }
