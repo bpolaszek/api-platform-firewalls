@@ -30,3 +30,8 @@ services:
     App\Api\ApiCollectionNormalizer:
         decorates: 'api_platform.hydra.normalizer.collection'
         arguments: [ '@App\Api\ApiCollectionNormalizer.inner' ]
+
+    App\Security\ACL\Customer\OrderACLExtension:
+        tags:
+            - { name: api_platform.doctrine.orm.query_extension.collection, priority: 9 }
+            - { name: api_platform.doctrine.orm.query_extension.item }
